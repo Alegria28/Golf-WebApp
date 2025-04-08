@@ -2,13 +2,13 @@ let map;
 let polyline;
 let path = [];
 let distanceDiv; // Variable para el elemento donde mostraremos la distancia
-let userMarker; // Marcador para la ubicación del usuario
+let userCircle; // Círculo para representar la ubicación del usuario
 let watchId;    // ID para rastrear la suscripción de watchPosition
 
-async function initMap() { // initMap ahora es asíncrona
+function initMap() {
     const mapDiv = document.getElementById("mapa");
     map = new google.maps.Map(mapDiv, {
-        zoom: 15, // Nivel de zoom inicial
+        zoom: 18, // Nivel de zoom inicial más cercano
         center: { lat: 0, lng: 0 }, // Centro inicial
         mapTypeId: 'satellite', // Inicia con la vista de satélite
         disableDefaultUI: true, // Oculta la mayoría de los controles predeterminados
@@ -33,8 +33,6 @@ async function initMap() { // initMap ahora es asíncrona
         distanceDiv.style.zIndex = '100'; // Asegura que esté sobre el mapa
     }
 
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
     // Intenta obtener y observar la ubicación del usuario en tiempo real
     if (navigator.geolocation) {
         const locationOptions = {
@@ -50,18 +48,23 @@ async function initMap() { // initMap ahora es asíncrona
                 };
                 const userLatLng = new google.maps.LatLng(userLocation.lat, userLocation.lng);
 
-                // Si el mapa aún no está centrado en la ubicación inicial, hazlo
-                if (!map.getCenter().equals(userLatLng) && !userMarker) {
-                    map.setCenter(userLatLng);
-                    // Añade el marcador del usuario la primera vez
-                    userMarker = new AdvancedMarkerElement({
-                        position: userLatLng,
+                // Centra el mapa en la ubicación del usuario
+                map.setCenter(userLatLng);
+
+                // Si el círculo del usuario no existe, créalo; si existe, actualiza su centro
+                if (userCircle) {
+                    userCircle.setCenter(userLatLng);
+                } else {
+                    userCircle = new google.maps.Circle({
+                        strokeColor: '#0000FF',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#ADD8E6',
+                        fillOpacity: 0.4,
                         map: map,
-                        title: 'Mi ubicación'
+                        center: userLatLng,
+                        radius: 10, // Radio del círculo en metros (ajusta según sea necesario)
                     });
-                } else if (userMarker) {
-                    // Actualiza la posición del marcador si ya existe
-                    userMarker.position = userLatLng;
                 }
             },
             (error) => {
@@ -80,21 +83,25 @@ async function initMap() { // initMap ahora es asíncrona
         centerButton.addEventListener('click', () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    async (position) => {
+                    (position) => {
                         const userLocation = {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
                         const userLatLng = new google.maps.LatLng(userLocation.lat, userLocation.lng);
                         map.setCenter(userLatLng);
-                        if (userMarker) {
-                            userMarker.position = userLatLng;
+                        if (userCircle) {
+                            userCircle.setCenter(userLatLng);
                         } else {
-                            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-                            userMarker = new AdvancedMarkerElement({
-                                position: userLatLng,
+                            userCircle = new google.maps.Circle({
+                                strokeColor: '#0000FF',
+                                strokeOpacity: 0.8,
+                                strokeWeight: 2,
+                                fillColor: '#ADD8E6',
+                                fillOpacity: 0.4,
                                 map: map,
-                                title: 'Mi ubicación'
+                                center: userLatLng,
+                                radius: 10, // Radio del círculo en metros (ajusta según sea necesario)
                             });
                         }
                     },
