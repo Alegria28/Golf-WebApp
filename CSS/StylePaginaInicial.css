@@ -8,7 +8,7 @@ html {
 
 body {
     /* Se establece una imagen de fondo para la página */
-    background-image: url(/Imagenes/FondoInicio.jpeg);
+    background-image: url(../Imagenes/FondoInicio.jpeg);
     /* Se aplica un color de fondo con opacidad para oscurecer la imagen de fondo */
     background-color: rgba(20, 19, 19, 0.6);
     /* Se utiliza el modo de mezcla 'darken' para combinar la imagen de fondo con el color de fondo */
