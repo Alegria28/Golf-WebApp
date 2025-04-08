@@ -1,46 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+<!-- Declaración del tipo de documento y configuración del idioma del contenido -->
 
 <head>
+    <!-- Metadatos del documento -->
     <meta charset="UTF-8">
+    <!-- Configuración de codificación de caracteres -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Configuración para que el diseño sea responsive en dispositivos móviles -->
 
     <title>Golf WebApp</title>
+    <!-- Título de la página que aparece en la pestaña del navegador -->
+
     <link rel="icon" type="image/x-icon" href="/Imagenes/IconoWeb.ico">
+    <!-- Enlace al ícono que se muestra en la pestaña del navegador -->
 
     <link rel="stylesheet" href="/CSS/StylePaginaInicial.css">
+    <!-- Enlace a la hoja de estilos CSS para la página -->
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-
+    <!-- Enlace a la fuente de íconos de Google Material Symbols -->
 </head>
 
 <body>
+    <!-- Contenido principal de la página -->
 
     <div id="divPrincipal">
+        <!-- Contenedor principal de la página -->
         <i class="material-symbols-outlined" id="golfCourseIcono">sports_golf</i>
-        <div id="logIn">
-            <button type="button" id="botonLogIn"><i class="material-symbols-outlined">add</i> Iniciar vuelta</button>
+        <!-- Ícono de golf utilizando Material Symbols -->
 
-            <button type="button" id="botonLogIn"><i class="material-symbols-outlined">login</i> Iniciar sesión</button>
+        <div id="logIn">
+            <!-- Contenedor para los botones de inicio de sesión y de iniciar vuelta -->
+            <button type="button" id="botonLogIn">
+                <i class="material-symbols-outlined">add</i> Iniciar vuelta
+            </button>
+            <!-- Botón para iniciar una nueva vuelta -->
+
+            <button type="button" id="botonLogIn">
+                <i class="material-symbols-outlined">login</i> Iniciar sesión
+            </button>
+            <!-- Botón para iniciar sesión -->
         </div>
     </div>
 
     <div id="popup">
+        <!-- Contenedor del popup de advertencia -->
         <div id="overlay"></div>
+        <!-- Fondo oscuro para resaltar el popup -->
+
         <div id="popup-content">
+            <!-- Contenido del popup -->
             <h2>¡Importante!</h2>
-            <p>Para guardar el progreso y tener un registro de tus vueltas, te recomendamos crear una cuenta. Si decides
-                continuar sin cuenta, <b>los datos de esta sesión no se almacenarán</b>.</p>
+            <!-- Título del popup -->
+
+            <p>
+                Para guardar el progreso y tener un registro de tus vueltas, te recomendamos crear una cuenta. Si decides
+                continuar sin cuenta, <b>los datos de esta sesión no se almacenarán</b>.
+            </p>
+            <!-- Mensaje de advertencia para el usuario -->
+
             <div id="popup-buttons">
+                <!-- Contenedor de los botones del popup -->
                 <button id="closeButton">Cerrar</button>
-                <button id="continueButton">Continuar</button>
+                <!-- Botón para cerrar el popup -->
+
+                <button id="continueButton" onclick="abrirInvitado()">Continuar</button>
+                <!-- Botón para continuar sin cuenta -->
             </div>
         </div>
     </div>
 
-
     <script src="/JavaScript/PaginaInicial.js"></script>
+    <!-- Enlace al archivo JavaScript que contiene la lógica de la página -->
 </body>
 
 </html>

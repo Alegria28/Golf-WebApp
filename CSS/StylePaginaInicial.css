@@ -2,6 +2,7 @@ html {
     /* Se establece el ancho y alto del elemento html al 100% para que ocupe toda la ventana del navegador */
     width: 100%;
     height: 100%;
+    /* Se define la fuente predeterminada para el documento */
     font-family: Verdana;
 }
 
@@ -21,7 +22,6 @@ body {
     background-position: center center;
 }
 
-
 #divPrincipal {
     /* Centra el contenido horizontal y verticalmente */
     justify-content: center;
@@ -30,16 +30,18 @@ body {
 
     /* Aplica bordes redondeados al contenedor */
     border-radius: 25px;
+    /* Define un borde gris claro alrededor del contenedor */
     border: 3px solid hsl(0, 0%, 70%);
     /* Agrega un relleno interno al contenedor */
     padding: 20px;
+    /* Aplica un efecto de desenfoque al fondo del contenedor */
     backdrop-filter: blur(10px);
 
     /* Posiciona el contenedor de forma absoluta en el centro de la pantalla */
     position: absolute;
     top: 50%;
     left: 50%;
-    /* Ajusta la posición para centrarlo completamente y ajustar su escala*/
+    /* Ajusta la posición para centrarlo completamente y ajustar su escala */
     transform: translate(-50%, -50%) scale(1);
 }
 
@@ -94,6 +96,8 @@ body {
     padding: auto;
     /* Agrega un margen superior e inferior */
     margin: 15px;
+    /* Ajusta el ancho del botón al contenido máximo */
+    width: max-content;
 }
 
 #golfCourseIcono {
@@ -116,11 +120,15 @@ body {
 }
 
 #popup {
+    /* Posiciona el popup de forma fija en la pantalla */
     position: fixed;
+    /* Inicialmente coloca el popup fuera de la vista */
     top: -100vh;
     left: 0px;
+    /* Establece el ancho y alto del popup para cubrir toda la pantalla */
     width: 100%;
     height: 100%;
+    /* Agrega una transición para el movimiento del popup */
     transition: top 0ms ease-in-out 300ms;
 
     /* Evita la selección del texto por el usuario */
@@ -129,48 +137,72 @@ body {
 }
 
 #popup #overlay {
+    /* Posiciona el overlay para cubrir toda la pantalla */
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
+    /* Aplica un fondo semitransparente al overlay */
     background: rgba(0, 0, 0, 0.5);
+    /* Inicialmente establece la opacidad del overlay en 0 */
     opacity: 0;
+    /* Agrega una transición para la opacidad del overlay */
     transition: opacity 100ms ease-in-out 200ms;
 }
 
 #popup #popup-content {
+    /* Posiciona el contenido del popup en el centro de la pantalla */
     position: absolute;
     top: 50%;
     left: 50%;
+    /* Centra el contenido y ajusta su escala */
     transform: translate(-50%, -50%) scale(1);
+    /* Define el ancho máximo del contenido del popup */
     width: 75%;
     max-width: 350px;
+    /* Establece un fondo blanco para el contenido del popup */
     background: #fff;
+    /* Agrega un relleno interno al contenido */
     padding: 15px;
+    /* Aplica bordes redondeados al contenido */
     border-radius: 20px;
+    /* Inicialmente establece la opacidad del contenido en 0 */
     opacity: 0;
+    /* Agrega un efecto de sombra al contenido */
     box-shadow: 0px 2px 2px 5px rgba(0, 0, 0, 0.5);
+    /* Agrega una transición para todas las propiedades del contenido */
     transition: all 300ms ease-in-out;
 }
 
 #popup #popup-content h2 {
+    /* Agrega un margen superior e inferior al título */
     margin: 10px 0px;
+    /* Define el tamaño de la fuente del título */
     font-size: 20px;
+    /* Establece el color del texto del título */
     color: #111;
+    /* Centra el texto del título */
     text-align: center;
 }
 
 #popup #popup-content p {
+    /* Agrega un margen superior e inferior al párrafo */
     margin: 15px 0px;
+    /* Define el tamaño de la fuente del párrafo */
     font-size: 14px;
+    /* Establece el color del texto del párrafo */
     color: #222;
+    /* Centra el texto del párrafo */
     text-align: center;
 }
 
 #popup #popup-content #popup-buttons {
+    /* Configura un diseño flexible para los botones */
     display: flex;
+    /* Distribuye los botones de manera uniforme */
     justify-content: space-between;
+    /* Agrega un margen superior al contenedor de botones */
     margin: 20px 0px 0px;
 }
 
@@ -216,16 +248,22 @@ body {
 }
 
 #popup.active {
+    /* Mueve el popup a la posición visible */
     top: 0px;
+    /* Elimina el retraso en la transición */
     transition: top 0ms ease-in-out 0ms;
 }
 
 #popup.active #overlay {
+    /* Establece la opacidad completa del overlay */
     opacity: 1;
+    /* Agrega una transición para la opacidad */
     transition: all 300px ease-in-out;
 }
 
 #popup.active #popup-content {
+    /* Mantiene el contenido centrado y ajusta su escala */
     transform: translate(-50%, -50%) scale(1);
+    /* Establece la opacidad completa del contenido */
     opacity: 1;
 }
