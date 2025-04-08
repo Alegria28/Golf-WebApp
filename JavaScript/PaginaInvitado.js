@@ -45,18 +45,20 @@ function initMap() {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                 };
+                const userLatLng = new google.maps.LatLng(userLocation.lat, userLocation.lng);
+
                 // Si el mapa aún no está centrado en la ubicación inicial, hazlo
-                if (!map.getCenter().equals(userLocation) && !userMarker) {
-                    map.setCenter(userLocation);
+                if (!map.getCenter().equals(userLatLng) && !userMarker) {
+                    map.setCenter(userLatLng);
                     // Añade el marcador del usuario la primera vez
                     userMarker = new google.maps.Marker({
-                        position: userLocation,
+                        position: userLatLng,
                         map: map,
                         title: 'Mi ubicación'
                     });
                 } else if (userMarker) {
                     // Actualiza la posición del marcador si ya existe
-                    userMarker.setPosition(userLocation);
+                    userMarker.setPosition(userLatLng);
                 }
             },
             (error) => {
@@ -80,12 +82,13 @@ function initMap() {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
-                        map.setCenter(userLocation);
+                        const userLatLng = new google.maps.LatLng(userLocation.lat, userLocation.lng);
+                        map.setCenter(userLatLng);
                         if (userMarker) {
-                            userMarker.setPosition(userLocation);
+                            userMarker.setPosition(userLatLng);
                         } else {
                             userMarker = new google.maps.Marker({
-                                position: userLocation,
+                                position: userLatLng,
                                 map: map,
                                 title: 'Mi ubicación'
                             });
@@ -156,9 +159,9 @@ function handleLocationError(browserHasGeolocation, pos, error = null) {
     infoWindow.open(map);
 }
 
-// Importante: Detener el seguimiento de la ubicación cuando la página se卸载 (opcional, pero buena práctica)
-window.onunload = function() {
+// Importante: Detener el seguimiento de la ubicación cuando la página se va a cerrar o navegar fuera (alternativa a unload)
+window.addEventListener('beforeunload', function () {
     if (navigator.geolocation && watchId) {
         navigator.geolocation.clearWatch(watchId);
     }
-};
+});
