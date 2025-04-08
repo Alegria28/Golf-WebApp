@@ -7,16 +7,27 @@
 
     <title>Vuelta invitado</title>
 
+    <!-- Define el icono de la pestaña del navegador -->
     <link rel="icon" type="image/x-icon" href="../Imagenes/IconoWeb.ico">
+    <!-- Enlaza la hoja de estilos CSS para dar formato a la página -->
     <link rel="stylesheet" href="../CSS/StylePaginaInvitado.css">
 </head>
 
 <body>
+    <!-- Contenedor donde se insertará el mapa de Google Maps -->
     <div id="mapa"></div>
 
     <!-- Script de Google Maps API -->
+    <!--
+        Este script carga la API de Google Maps de forma asíncrona.
+        - key: Reemplaza con tu clave de API de Google Maps.
+        - callback: Especifica la función `initMap` que se llamará cuando la API esté cargada.
+        - loading=async: Carga el script de forma asíncrona para no bloquear el renderizado de la página.
+        - libraries=marker: Incluye la biblioteca de marcadores de Google Maps.
+    -->
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPnUt4427PpNOccAx0kYUzfEE30etbb5U&callback=initMap&loading=async&libraries=marker"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=_____&callback=initMap&loading=async&libraries=marker"></script>
+    <!-- Enlaza el archivo JavaScript que contiene la lógica para inicializar y manipular el mapa -->
     <script src="../JavaScript/PaginaInvitado.js"></script>
 </body>
 

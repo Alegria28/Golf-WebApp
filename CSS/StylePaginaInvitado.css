@@ -1,11 +1,16 @@
 #mapa {
     height: 100%;
+    /* Establece la altura del elemento con id "mapa" al 100% del contenedor padre. Esto asegura que el mapa ocupe toda la altura disponible. */
     width: 100%;
+    /* Establece el ancho del elemento con id "mapa" al 100% del contenedor padre, haciendo que el mapa ocupe todo el ancho disponible. */
 }
 
 html,
 body {
     height: 100%;
+    /* Define que tanto el elemento <html> como el <body> ocupen el 100% de la altura de la ventana del navegador. Esto es necesario para que los elementos hijos (como #mapa) puedan usar el 100% de la altura. */
     margin: 0;
+    /* Elimina cualquier margen predeterminado del navegador para <html> y <body>, asegurando que no haya espacio en blanco alrededor del contenido. */
     padding: 0;
+    /* Elimina cualquier relleno predeterminado del navegador para <html> y <body>, asegurando que no haya espacio interno adicional. */
 }
