@@ -160,7 +160,7 @@ function handleLocationError(browserHasGeolocation, pos, error = null) {
 }
 
 // Importante: Detener el seguimiento de la ubicación cuando la página se va a cerrar o navegar fuera (alternativa a unload)
-window.addEventListener('beforeunload', function () {
+window.addEventListener('beforeunload', function() {
     if (navigator.geolocation && watchId) {
         navigator.geolocation.clearWatch(watchId);
     }
