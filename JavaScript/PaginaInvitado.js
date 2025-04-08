@@ -5,8 +5,9 @@ let distanceDiv; // Variable para el elemento donde mostraremos la distancia
 let userMarker; // Marcador para la ubicación del usuario
 let watchId;    // ID para rastrear la suscripción de watchPosition
 
-function initMap() {
-    map = new google.maps.Map(document.getElementById("mapa"), {
+async function initMap() { // initMap ahora es asíncrona
+    const mapDiv = document.getElementById("mapa");
+    map = new google.maps.Map(mapDiv, {
         zoom: 15, // Nivel de zoom inicial
         center: { lat: 0, lng: 0 }, // Centro inicial
         mapTypeId: 'satellite', // Inicia con la vista de satélite
@@ -32,6 +33,8 @@ function initMap() {
         distanceDiv.style.zIndex = '100'; // Asegura que esté sobre el mapa
     }
 
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
     // Intenta obtener y observar la ubicación del usuario en tiempo real
     if (navigator.geolocation) {
         const locationOptions = {
@@ -51,14 +54,14 @@ function initMap() {
                 if (!map.getCenter().equals(userLatLng) && !userMarker) {
                     map.setCenter(userLatLng);
                     // Añade el marcador del usuario la primera vez
-                    userMarker = new google.maps.Marker({
+                    userMarker = new AdvancedMarkerElement({
                         position: userLatLng,
                         map: map,
                         title: 'Mi ubicación'
                     });
                 } else if (userMarker) {
                     // Actualiza la posición del marcador si ya existe
-                    userMarker.setPosition(userLatLng);
+                    userMarker.position = userLatLng;
                 }
             },
             (error) => {
@@ -77,7 +80,7 @@ function initMap() {
         centerButton.addEventListener('click', () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
+                    async (position) => {
                         const userLocation = {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
@@ -85,9 +88,10 @@ function initMap() {
                         const userLatLng = new google.maps.LatLng(userLocation.lat, userLocation.lng);
                         map.setCenter(userLatLng);
                         if (userMarker) {
-                            userMarker.setPosition(userLatLng);
+                            userMarker.position = userLatLng;
                         } else {
-                            userMarker = new google.maps.Marker({
+                            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+                            userMarker = new AdvancedMarkerElement({
                                 position: userLatLng,
                                 map: map,
                                 title: 'Mi ubicación'
@@ -160,7 +164,7 @@ function handleLocationError(browserHasGeolocation, pos, error = null) {
 }
 
 // Importante: Detener el seguimiento de la ubicación cuando la página se va a cerrar o navegar fuera (alternativa a unload)
-window.addEventListener('beforeunload', function() {
+window.addEventListener('beforeunload', function () {
     if (navigator.geolocation && watchId) {
         navigator.geolocation.clearWatch(watchId);
     }
