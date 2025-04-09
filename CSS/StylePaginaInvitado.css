@@ -1,31 +1,72 @@
 #mapa {
     height: 100%;
-    /* Establece la altura del elemento con id "mapa" al 100% del contenedor padre. Esto asegura que el mapa ocupe toda la altura disponible. */
+    /* Establece la altura del mapa al 100% de su contenedor padre */
     width: 100%;
-    /* Establece el ancho del elemento con id "mapa" al 100% del contenedor padre, haciendo que el mapa ocupe todo el ancho disponible. */
+    /* Establece el ancho del mapa al 100% de su contenedor padre */
 }
 
 html,
 body {
     height: 100%;
-    /* Define que tanto el elemento <html> como el <body> ocupen el 100% de la altura de la ventana del navegador. Esto es necesario para que los elementos hijos (como #mapa) puedan usar el 100% de la altura. */
+    /* Asegura que tanto el HTML como el body ocupen toda la altura de la ventana */
     margin: 0;
-    /* Elimina cualquier margen predeterminado del navegador para <html> y <body>, asegurando que no haya espacio en blanco alrededor del contenido. */
+    /* Elimina los márgenes predeterminados del navegador */
     padding: 0;
-    /* Elimina cualquier relleno predeterminado del navegador para <html> y <body>, asegurando que no haya espacio interno adicional. */
+    /* Elimina el relleno predeterminado del navegador */
 }
 
-#sobreMapa #botonCentrar {
-    position: relative;
+#sobreMapa {
+    position: absolute;
+    /* Posiciona el elemento absolutamente en relación con su ancestro posicionado más cercano */
+    top: 0;
+    /* Lo alinea a la parte superior de su contenedor */
+    left: 0;
+    /* Lo alinea a la parte izquierda de su contenedor */
+    width: 100%;
+    /* Ocupa todo el ancho de su contenedor */
+    height: 100%;
+    /* Ocupa toda la altura de su contenedor */
+    pointer-events: none;
+    /* Permite que los eventos del ratón interactúen con los elementos debajo de él */
 }
 
 #centrarMapa {
     position: absolute;
+    /* Posiciona el botón absolutamente en relación con su ancestro posicionado más cercano */
     right: 20px;
+    /* Lo alinea a 20px del borde derecho de su contenedor */
     bottom: 20px;
+    /* Lo alinea a 20px del borde inferior de su contenedor */
+    pointer-events: auto;
+    /* Permite que el botón responda a los eventos del ratón */
 }
 
 #centrarMapa i.material-symbols-outlined {
-    /* Ajusta el tamaño del ícono dentro del botón */
     font-size: 50px;
+    /* Establece el tamaño del icono */
+    user-select: none;
+    /* Evita que el usuario pueda seleccionar el texto del icono */
+    -webkit-user-select: none;
+    /* Evita que el usuario pueda seleccionar el texto del icono en navegadores basados en WebKit */
+}
+
+#distancia {
+    background-color: white;
+    /* Establece el color de fondo del elemento a blanco */
+    position: absolute;
+    /* Posiciona el elemento absolutamente en relación con su ancestro posicionado más cercano */
+    top: 10px;
+    /* Lo alinea a 10px de la parte superior de su contenedor */
+    left: 50%;
+    /* Lo alinea al centro horizontal de su contenedor */
+    transform: translateX(-50%);
+    /* Ajusta la posición horizontal para centrarlo correctamente */
+    text-align: center;
+    /* Centra el texto dentro del elemento */
+    user-select: none;
+    /* Evita que el usuario pueda seleccionar el texto */
+    -webkit-user-select: none;
+    /* Evita que el usuario pueda seleccionar el texto en navegadores basados en WebKit */
+    pointer-events: auto;
+    /* Permite que el elemento responda a los eventos del ratón */
 }
