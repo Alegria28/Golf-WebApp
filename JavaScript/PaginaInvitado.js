@@ -1,9 +1,9 @@
 let map; // Variable para almacenar la instancia del mapa de Google Maps
-let polyline; // Variable para almacenar la polyline que se utiliza para dibujar la ruta de medición
-let path = []; // Array para almacenar las coordenadas (LatLng) de la ruta de medición
 let distanceDiv; // Variable para el elemento HTML donde se mostrará la distancia total medida
 let userCircle; // Círculo para representar la ubicación del usuario en el mapa
 let watchId;    // ID para rastrear la suscripción de watchPosition, necesario para detener el rastreo
+let userLocation = null; // Variable para almacenar la ubicación actual del usuario
+let polyline = null; // Polyline para dibujar la ruta de medición
 
 // Función principal para inicializar el mapa de Google Maps
 function initMap() {
@@ -12,7 +12,7 @@ function initMap() {
 
     // Crea una nueva instancia del mapa de Google Maps
     map = new google.maps.Map(mapDiv, {
-        zoom: 18, // Establece el nivel de zoom inicial del mapa (más cercano)
+        zoom: 19, // Establece el nivel de zoom inicial del mapa (más cercano)
         center: { lat: 0, lng: 0 }, // Establece el centro inicial del mapa (latitud y longitud)
         mapTypeId: 'satellite', // Establece el tipo de mapa a vista de satélite
         disableDefaultUI: true, // Oculta la mayoría de los controles predeterminados del mapa
@@ -51,7 +51,7 @@ function initMap() {
         watchId = navigator.geolocation.watchPosition(
             (position) => {
                 // Callback que se ejecuta cuando se obtiene una nueva ubicación
-                const userLocation = {
+                userLocation = {
                     lat: position.coords.latitude, // Obtiene la latitud de la ubicación
                     lng: position.coords.longitude, // Obtiene la longitud de la ubicación
                 };
@@ -63,17 +63,18 @@ function initMap() {
                 // Si el círculo del usuario no existe, créalo; si existe, actualiza su centro
                 if (userCircle) {
                     userCircle.setCenter(userLatLng); // Actualiza el centro del círculo existente
+                    userCircle.setRadius(calculateCircleRadius()); // Actualiza el radio del círculo
                 } else {
                     // Crea un nuevo círculo para representar la ubicación del usuario
                     userCircle = new google.maps.Circle({
-                        strokeColor: '#0000FF', // Color del borde del círculo (azul)
-                        strokeOpacity: 0.8, // Opacidad del borde del círculo
-                        strokeWeight: 2, // Grosor del borde del círculo
-                        fillColor: '#ADD8E6', // Color de relleno del círculo (azul claro)
-                        fillOpacity: 0.4, // Opacidad del relleno del círculo
+                        strokeColor: '#FFFF', // Color del borde del círculo (blanco)
+                        strokeOpacity: 1, // Opacidad del borde del círculo
+                        strokeWeight: 3, // Grosor del borde del círculo
+                        fillColor: '#0000FF', // Color de relleno del círculo (azul claro)
+                        fillOpacity: 1, // Opacidad del relleno del círculo
                         map: map, // Asigna el mapa al círculo
                         center: userLatLng, // Establece el centro del círculo en la ubicación del usuario
-                        radius: 10, // Radio del círculo en metros (ajusta según sea necesario)
+                        radius: calculateCircleRadius(), // Radio del círculo en metros (ajusta según sea necesario)
                     });
                 }
             },
@@ -98,12 +99,13 @@ function initMap() {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         // Callback que se ejecuta cuando se obtiene la ubicación
-                        const userLocation = {
+                        userLocation = {
                             lat: position.coords.latitude, // Obtiene la latitud de la ubicación
                             lng: position.coords.longitude, // Obtiene la longitud de la ubicación
                         };
                         const userLatLng = new google.maps.LatLng(userLocation.lat, userLocation.lng); // Crea un objeto LatLng con la ubicación del usuario
                         map.setCenter(userLatLng); // Centra el mapa en la ubicación del usuario
+                        map.setZoom(19); // Establece el zoom al valor inicial
                         if (userCircle) {
                             userCircle.setCenter(userLatLng); // Actualiza el centro del círculo existente
                         } else {
@@ -140,42 +142,68 @@ function initMap() {
     // Añade un listener para los clics en el mapa para medir distancias
     map.addListener('click', (mapsMouseEvent) => {
         // Agrega un event listener al mapa para detectar clics
-        addLatLng(mapsMouseEvent.latLng); // Llama a la función para agregar la coordenada al array de ruta
+        if (userLocation) {
+            // Si la ubicación del usuario está disponible
+            addLatLng(mapsMouseEvent.latLng); // Llama a la función para agregar la coordenada al array de ruta
+        } else {
+            alert("La ubicación del usuario aún no está disponible."); // Muestra una alerta si la ubicación no está disponible
+        }
     });
 
-    // Inicializa la polyline para la medición
+    // Agrega un listener para el evento de cambio de zoom
+    map.addListener('zoom_changed', () => {
+        if (userCircle) {
+            userCircle.setRadius(calculateCircleRadius());
+        }
+    });
+}
+
+// Función para agregar una coordenada a la ruta de medición
+function addLatLng(clickLatLng) {
+    if (!userLocation) {
+        console.error("User location not available.");
+        return;
+    }
+
+    const userLatLng = new google.maps.LatLng(userLocation.lat, userLocation.lng);
+
+    // Si ya existe una polyline, la elimina del mapa
+    if (polyline) {
+        polyline.setMap(null);
+    }
+
+    // Crea una nueva polyline para la medición
     polyline = new google.maps.Polyline({
-        path: path, // Asigna el array de coordenadas a la polyline
+        path: [userLatLng, clickLatLng], // Asigna el array de coordenadas a la polyline
         geodesic: true, // Indica que la ruta debe seguir la curvatura de la Tierra
         strokeColor: '#FF0000', // Color de la línea (rojo)
         strokeOpacity: 1.0, // Opacidad de la línea
         strokeWeight: 2, // Grosor de la línea
         map: map, // Asigna el mapa a la polyline
     });
-}
 
-// Función para agregar una coordenada a la ruta de medición
-function addLatLng(latLng) {
-    path.push(latLng); // Agrega la nueva coordenada al array de ruta
-    polyline.setPath(path); // Actualiza la polyline con el nuevo array de ruta
+    // Agrega un listener para eliminar la polyline al hacer clic sobre ella
+    polyline.addListener('click', () => {
+        polyline.setMap(null); // Elimina la polyline del mapa
+        distanceDiv.textContent = `Distancia: ${0} yd`; // Muestra la distancia en el elemento HTML
+    });
 
-    if (path.length > 1) {
-        // Si hay más de una coordenada en la ruta, calcula la distancia total
-        calculateDistance(); // Llama a la función para calcular la distancia
-    }
+    // Calcula la distancia entre la ubicación del usuario y el punto de clic
+    calculateDistance(userLatLng, clickLatLng);
 }
 
 // Función para calcular la distancia total de la ruta
-function calculateDistance() {
-    let totalDistanceMeters = 0; // Variable para almacenar la distancia total en metros
-    for (let i = 0; i < path.length - 1; i++) {
-        // Itera sobre el array de coordenadas para calcular la distancia entre cada par de puntos
-        totalDistanceMeters += google.maps.geometry.spherical.computeDistanceBetween(path[i], path[i + 1]); // Calcula la distancia entre dos coordenadas y la suma al total
-    }
-
+function calculateDistance(startLatLng, endLatLng) {
+    const distanceMeters = google.maps.geometry.spherical.computeDistanceBetween(startLatLng, endLatLng); // Calcula la distancia entre dos coordenadas
     // Convertir metros a yardas (1 metro ≈ 1.09361 yardas)
-    const totalDistanceYards = (totalDistanceMeters * 1.09361).toFixed(2); // Convierte la distancia de metros a yardas y la formatea a 2 decimales
-    distanceDiv.textContent = `Distancia total: ${totalDistanceYards} yd`; // Muestra la distancia total en el elemento HTML
+    const distanceYards = (distanceMeters * 1.09361).toFixed(2); // Convierte la distancia de metros a yardas y la formatea a 2 decimales
+    distanceDiv.textContent = `Distancia: ${distanceYards} yd`; // Muestra la distancia en el elemento HTML
+}
+
+function calculateCircleRadius() {
+    const zoomLevel = map.getZoom();
+    // Ajustamos estos valores según sea necesario para que el círculo se vea bien en diferentes niveles de zoom
+    return 5 / Math.pow(2, zoomLevel - 19);
 }
 
 // Función para manejar los errores de geolocalización

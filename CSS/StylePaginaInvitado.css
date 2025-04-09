@@ -14,3 +14,18 @@ body {
     padding: 0;
     /* Elimina cualquier relleno predeterminado del navegador para <html> y <body>, asegurando que no haya espacio interno adicional. */
 }
+
+#sobreMapa #botonCentrar {
+    position: relative;
+}
+
+#centrarMapa {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+#centrarMapa i.material-symbols-outlined {
+    /* Ajusta el tamaño del ícono dentro del botón */
+    font-size: 50px;
+}
