@@ -57,9 +57,6 @@ function initMap() {
                 };
                 const userLatLng = new google.maps.LatLng(userLocation.lat, userLocation.lng); // Crea un objeto LatLng con la ubicación del usuario
 
-                // Centra el mapa en la ubicación del usuario
-                map.setCenter(userLatLng);
-
                 // Si el círculo del usuario no existe, créalo; si existe, actualiza su centro
                 if (userCircle) {
                     userCircle.setCenter(userLatLng); // Actualiza el centro del círculo existente
