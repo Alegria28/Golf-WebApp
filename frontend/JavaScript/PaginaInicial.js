@@ -42,5 +42,5 @@ document.querySelector("#botonLogIn").addEventListener("click", popup);
 
 // Función para abrir la pagina de invitado
 function abrirInvitado(){
-    window.location.href = "Html/NuevaRondaInvitado.html"
+    window.location.href = "frontend/Html/NuevaRondaInvitado.html"
 }

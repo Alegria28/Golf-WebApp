@@ -39,6 +39,9 @@ body {
     /* Lo alinea a 20px del borde inferior de su contenedor */
     pointer-events: auto;
     /* Permite que el botón responda a los eventos del ratón */
+    border-radius: 50%;
+    /* Hace que el botón tenga bordes redondeados, formando un círculo */
+
 }
 
 #centrarMapa i.material-symbols-outlined {
@@ -69,4 +72,32 @@ body {
     /* Evita que el usuario pueda seleccionar el texto en navegadores basados en WebKit */
     pointer-events: auto;
     /* Permite que el elemento responda a los eventos del ratón */
+}
+
+#izquierda {
+    border: 3px groove gray ;
+
+    margin: 5px;
+    /* Establece un margen de 5px alrededor del elemento */
+    position: absolute;
+    /* Posiciona el elemento absolutamente en relación con su ancestro posicionado más cercano */
+    background-color: #FFFF;
+    /* Establece el color de fondo del elemento a blanco */
+    top: 50%;
+    /* Lo alinea al 50% de la altura de su contenedor */
+    -ms-transform: translateY(-50%);
+    /* Ajusta la posición vertical para centrarlo correctamente en navegadores antiguos de Microsoft */
+    transform: translateY(-50%);
+    /* Ajusta la posición vertical para centrarlo correctamente */
+
+    -webkit-user-select: none;
+    /* Evita que el usuario pueda seleccionar el texto en navegadores basados en WebKit */
+    pointer-events: auto;
+    /* Permite que el elemento responda a los eventos del ratón */
+
+    text-align: center;
+    
+    font-weight: bold;
+
+    padding: 4px;
 }
