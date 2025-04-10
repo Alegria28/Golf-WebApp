@@ -1,0 +1,54 @@
+### Understanding Network Ports and Windows Commands
+
+**What is a Network Port?**
+
+Think of a network port like a virtual doorway on your computer. Your computer has a single physical network connection (like your Wi-Fi or Ethernet cable), but it can run many different applications and services that need to communicate over that connection simultaneously. Network ports allow these different applications to use the same network connection without interfering with each other.
+
+* **Analogy:** Imagine an apartment building with only one street address. Each apartment within the building has a unique number. When mail arrives, the address gets it to the building, and the apartment number directs it to the correct recipient. In networking, the IP address is like the street address (identifying your computer on the network), and the port number is like the apartment number (identifying the specific application or service on your computer).
+
+* **Technical Detail:** Network ports are identified by numbers ranging from 0 to 65535. Certain port numbers are well-known and commonly associated with specific protocols and services (e.g., port 80 for HTTP web traffic, port 443 for HTTPS secure web traffic, and as we've discussed, port 3306 for MySQL).
+
+* **TCP and UDP:** Ports work with network protocols like TCP (Transmission Control Protocol) and UDP (User Datagram Protocol). These protocols manage how data is sent and received over the network.
+
+**Windows Commands for Inspecting Ports:**
+
+Here's an explanation of the Windows commands you mentioned:
+
+**1. `netstat`**
+
+* **Purpose:** The `netstat` command is a fundamental command-line utility in Windows used to display active network connections, listening ports, Ethernet statistics, the TCP/IP protocol suite, routing tables, and network interface information. When run without any specific options, it provides a general overview of your current network activity.
+
+* **Output:** The basic `netstat` command will typically show you:
+    * **Proto:** The protocol being used (e.g., TCP, UDP).
+    * **Local Address:** The IP address and port number your computer is using for the connection.
+    * **Foreign Address:** The IP address and port number of the remote computer you are connected to.
+    * **State:** The current status of the connection (e.g., ESTABLISHED, LISTENING, TIME\_WAIT).
+
+* **Usage:** Simply open Command Prompt or PowerShell and type `netstat` followed by the Enter key.
+
+**2. `netstat -ano | findstr "3306"`**
+
+* **Purpose:** This command is used to specifically check if any process on your Windows computer is currently listening on or has an active connection using port 3306.
+
+* **Breakdown:**
+    * `netstat -ano`: This part of the command tells `netstat` to:
+        * `-a`: Display all active TCP connections and the TCP and UDP ports on which the computer is listening.
+        * `-n`: Display addresses and port numbers in numerical form.
+        * `-o`: Display the process identifier (PID) associated with each connection.
+    * `|`: This is the pipe operator. It takes the output of the command on the left (`netstat -ano`) and sends it as input to the command on the right (`findstr "3306"`).
+    * `findstr "3306"`: This command searches the output it receives (from `netstat -ano`) for any lines that contain the string "3306". This will highlight any network activity involving port 3306.
+
+* **Interpretation of Output:** If you see a line in the output that includes "3306" and the state is "LISTENING" or "ESTABLISHED", it indicates that an application (likely your MySQL server, if it's running) is using port 3306. The last number on that line will be the PID of the process using that port.
+
+**3. `tasklist | findstr "[PID]"`**
+
+* **Purpose:** Once you have a Process Identifier (PID) from the output of `netstat -ano`, you can use this command to find the name of the program associated with that PID.
+
+* **Breakdown:**
+    * `tasklist`: This command displays a list of all currently running processes on your Windows system, including their image name (the executable file name), PID, session information, and memory usage.
+    * `|`: Again, the pipe operator takes the output of `tasklist` and sends it as input to `findstr`.
+    * `findstr "[PID]"`: Replace `[PID]` with the actual process ID number you want to find (e.g., `findstr "4672"`). This command will search the output of `tasklist` for the line containing that specific PID and show you the details of the process, including its name.
+
+* **Usage:** First, run `netstat -ano | findstr "3306"` (or the port you're interested in) to get the PID. Then, take that PID and replace `[PID]` in the `tasklist | findstr "[PID]"` command and run it. The output will show you which program is using that port.
+
+By using these commands together, you can effectively identify which applications on your Windows system are using specific network ports. This is crucial for tasks like troubleshooting network connectivity issues or verifying that a server (like your MySQL server) is running on the expected port.

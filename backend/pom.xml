@@ -41,12 +41,25 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+		<!-- Direct vulnerabilities: 
+				CVE-2023-22102-->
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>8.0.33</version>
+		    <groupId>com.mysql</groupId>
+		    <artifactId>mysql-connector-j</artifactId>
+		    <version>9.2.0</version>
 		</dependency>
+
+		<!-- 
+		    Spring Boot Actuator proporciona endpoints para monitorear y gestionar la aplicación.
+		    Esta dependencia nos permite, por ejemplo, verificar si la base de datos está conectada
+		    correctamente mediante el endpoint /actuator/health.
+		-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
