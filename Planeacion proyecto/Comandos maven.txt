@@ -1,0 +1,99 @@
+# Comandos básicos de Maven para verificar la dependencia de MySQL
+
+# 1. Navegar al directorio del proyecto:
+# Asegúrate de estar en la misma carpeta donde se encuentra tu archivo pom.xml
+cd tu-proyecto-golfwebapp
+
+# 2. Limpiar el proyecto (elimina construcciones anteriores):
+mvn clean
+
+# 3. Compilar el proyecto:
+# Este comando intentará compilar tu código Java. Si la dependencia
+# de MySQL se ha resuelto correctamente, no deberías ver errores
+# de "clase no encontrada" relacionados con las clases de MySQL.
+mvn compile
+
+# 4. Mostrar el árbol de dependencias:
+# Este comando muestra todas las dependencias de tu proyecto,
+# incluyendo las transitivas. Busca la entrada de mysql-connector-j
+# para confirmar que está presente.
+mvn dependency:tree
+
+# 5. Ejecutar las pruebas (si tienes pruebas configuradas):
+# Si tienes pruebas que intentan usar la dependencia de MySQL (aunque
+# no se conecten a la base de datos), este comando puede revelar
+# si la dependencia está disponible en el classpath de prueba.
+mvn test
+
+# 6. Empaquetar el proyecto (crea un JAR o WAR):
+# Si el empaquetado se completa sin errores relacionados con la
+# dependencia de MySQL, es otra buena señal.
+mvn package
+
+# Interpretación de los resultados:
+
+# - Si 'mvn compile' se completa sin errores, es probable que la
+#   dependencia esté disponible para la compilación.
+
+# - Si 'mvn dependency:tree' muestra una línea como:
+#   [INFO] \- com.mysql:mysql-connector-j:jar:8.0.33:compile
+#   (o una versión similar), la dependencia ha sido resuelta por Maven.
+
+# - Si 'mvn test' pasa (y tus pruebas usan la dependencia), confirma
+#   que está disponible en el entorno de prueba.
+
+# - Si 'mvn package' se completa sin errores, la dependencia se incluirá
+#   en el artefacto construido.
+
+# Estos comandos te dan una verificación básica de que Maven ha
+# aceptado y puede utilizar la dependencia de MySQL. El siguiente paso
+# sería configurar la conexión a la base de datos en tu archivo
+# application.properties o application.yml.
+
+-------------------------------------
+
+Para que los comandos mvn compile o mvn test "funcionen" en el sentido de verificar la disponibilidad de la dependencia de MySQL, 
+no necesitas usar comandos específicos que vengan directamente de la dependencia en sí. 
+Más bien, necesitas que tu código Java (tanto el código fuente principal como el código de prueba) intente utilizar clases que proporciona la dependencia de MySQL.
+
+
+
+
+
+¡Excelente! El resultado de mvn compile muestra BUILD SUCCESS y también la advertencia:
+
+[WARNING] The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
+Esta advertencia es muy importante y confirma que Maven ha reconocido la dependencia de MySQL. Te está informando que la forma correcta de referenciar el conector MySQL en versiones recientes es con el groupId com.mysql y el artifactId mysql-connector-j.
+
+¿Por qué funcionó la compilación?
+
+Aunque tu pom.xml originalmente tenía:
+
+XML
+
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.33</version>
+</dependency>
+Maven es lo suficientemente inteligente como para entender la "relocación" del artefacto. Cuando intentó descargar mysql:mysql-connector-java, los repositorios de Maven le indicaron que el artefacto se ha movido a com.mysql:mysql-connector-j. Por lo tanto, Maven internamente resolvió la dependencia a la versión correcta.
+
+¿Qué deberías hacer ahora?
+
+Para evitar esta advertencia en el futuro y tener la configuración más limpia, deberías actualizar la dependencia en tu pom.xml a la forma recomendada:
+
+XML
+
+<dependency>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+    <version>8.0.33</version>
+</dependency>
+Después de actualizar tu pom.xml, vuelve a ejecutar mvn clean y luego mvn compile. La advertencia debería desaparecer.
+
+En resumen:
+
+El BUILD SUCCESS de mvn compile indica que tu código Java se compiló sin errores relacionados con la falta de la dependencia de MySQL.
+ La advertencia confirma que Maven encontró la librería correcta, aunque te sugiere actualizar la configuración en tu pom.xml para usar las coordenadas más recientes.
+
+¡Ya tienes la dependencia de MySQL correctamente integrada en tu proyecto! Ahora puedes proceder con la configuración de la conexión a la base de datos en tus archivos de configuración de Spring Boot.
