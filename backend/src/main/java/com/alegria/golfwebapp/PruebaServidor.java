@@ -3,6 +3,7 @@ package com.alegria.golfwebapp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+@SuppressWarnings("unused") // Temporal
 public class PruebaServidor {
     public static void main(String[] args) {
         // Definimos la URL de la base de datos MySQL a la que nos vamos a conectar.

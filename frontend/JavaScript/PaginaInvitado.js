@@ -130,9 +130,15 @@ function initMap() {
 
     // Añade un listener para el botón de cambiar el modo de distancia
     const cambiarDistancia = document.getElementById('cambiarDistancia');
+    // Esta línea selecciona el elemento <i> con la clase "material-symbols-outlined" dentro del botón "cambiarDistancia".
+    // Esto permite modificar dinámicamente el contenido del ícono según el estado del modo de distancia.
+    const iconoCambiarDistancia = cambiarDistancia.querySelector('i.material-symbols-outlined');
+
     cambiarDistancia.addEventListener('click', () => {
         // Cambia el modo de distancia (alternar entre activado/desactivado)
         modoDistancia = !modoDistancia; // Invierte el valor de la variable modoDistancia
+        // Cambia el ícono según el modo
+        iconoCambiarDistancia.textContent = modoDistancia ? 'straighten' : 'person_pin_circle';
     });
 
     // Añade un listener para los clics en el mapa para medir distancias
