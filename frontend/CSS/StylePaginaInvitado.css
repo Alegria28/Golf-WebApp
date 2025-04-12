@@ -17,6 +17,17 @@ body {
     /* Elimina el relleno predeterminado del navegador */
 }
 
+/* Oculta elementos específicos de la interfaz de Google Maps */
+.gm-style-cc,
+/* Oculta el contenedor de términos y condiciones */
+.gmnoprint a,
+/* Oculta los enlaces de atajos de teclado */
+.gmnoprint span {
+    /* Oculta el enlace "Reportar un error del mapa" */
+    display: none;
+    /* Oculta los elementos */
+}
+
 /* Contenedor para los elementos sobre el mapa */
 #sobreMapa {
     position: absolute;

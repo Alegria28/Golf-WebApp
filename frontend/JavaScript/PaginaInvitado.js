@@ -246,7 +246,7 @@ function calcularRadioCirculo() {
     // Función para calcular el radio del círculo según el nivel de zoom
     const nivelZoom = mapa.getZoom(); // Obtiene el nivel de zoom actual del mapa
     // Ajustamos estos valores según sea necesario para que el círculo se vea bien en diferentes niveles de zoom
-    return 5 / Math.pow(2, nivelZoom - 19); // Calcula el radio del círculo
+    return 7 / Math.pow(2, nivelZoom - 19); // Calcula el radio del círculo
 }
 
 // Función para manejar los errores de geolocalización
