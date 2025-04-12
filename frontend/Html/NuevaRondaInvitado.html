@@ -2,10 +2,12 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
+    <!-- Metadatos básicos -->
+    <meta charset="UTF-8"> <!-- Define la codificación de caracteres como UTF-8 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Configura la página para ser responsive -->
 
-    <title>Vuelta invitado</title>
+    <title>Vuelta invitado</title> <!-- Título de la página que aparece en la pestaña del navegador -->
 
     <!-- Define el icono de la pestaña del navegador -->
     <link rel="icon" type="image/x-icon" href="../Imagenes/IconoWeb.ico">
@@ -19,49 +21,52 @@
 </head>
 
 <body>
+    <!-- Contenedor principal del mapa -->
+    <div id="mapa"></div> <!-- Div donde se renderizará el mapa interactivo -->
 
-    <!-- Contenedor donde se insertará el mapa de Google Maps -->
-    <div id="mapa"></div>
-
-    <!--Div para todos los elementos que van a estar sobre el mapa-->
+    <!-- Div para todos los elementos que estarán sobre el mapa -->
     <div id="sobreMapa">
-        <!-- Div que contiene el botón para centrar el mapa -->
-        <div>
+        <!-- Contenedor para los botones en la esquina inferior derecha -->
+        <div id="abajoDerecha">
+            <!-- Botón para cambiar el modo de distancias -->
+            <button type="button" id="cambiarDistancia">
+                <!-- Icono para el botón de cambiar distancia -->
+                <i class="material-symbols-outlined">straighten</i> <!-- Ícono de regla para medir distancias -->
+            </button>
+
             <!-- Botón para centrar el mapa en la ubicación del usuario -->
             <button type="button" id="centrarMapa">
-                <!-- Icono de navegación para el botón de centrar -->
-                <i class="material-symbols-outlined">navigation</i>
+                <!-- Icono para el botón de centrar -->
+                <i class="material-symbols-outlined">distance</i> <!-- Ícono para centrar el mapa -->
             </button>
         </div>
 
+        <!-- Contenedor para la información del hoyo en la izquierda -->
         <div id="izquierda">
             <div class="informacionIzquierda">
-                <div id ="numeroHoyo">
-                    <p>Hoyo</p>
+                <!-- Información del número del hoyo -->
+                <div id="numeroHoyo">
+                    <p>Hoyo</p> <!-- Texto que indica el número del hoyo -->
                 </div>
+                <!-- Información del par del hoyo -->
                 <div id="parHoyo">
-                    <p>Par</p>
+                    <p>Par</p> <!-- Texto que indica el par del hoyo -->
                 </div>
+                <!-- Información de la ventaja del hoyo -->
                 <div id="ventajaHoyo">
-                    <p>Ventaja</p>
+                    <p>Ventaja</p> <!-- Texto que indica la ventaja del hoyo -->
                 </div>
             </div>
         </div>
 
         <!-- Div donde se mostrará la distancia medida -->
-        <div id="distancia">Distancia: 0yd</div>
+        <div id="distancia">Distancia: 0yd</div> <!-- Texto que muestra la distancia medida en yardas -->
     </div>
 
     <!-- Script de Google Maps API -->
-    <!--
-        Este script carga la API de Google Maps de forma asíncrona.
-        - key: Reemplaza con tu clave de API de Google Maps.
-        - callback: Especifica la función `initMap` que se llamará cuando la API esté cargada.
-        - loading=async: Carga el script de forma asíncrona para no bloquear el renderizado de la página.
-        - libraries=marker: Incluye la biblioteca de marcadores de Google Maps.
-    -->
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzUGN6Z9d93OHn04q9BQw5xazdmysbHxs&callback=initMap&loading=async&libraries=marker,geometry"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzUGN6Z9d93OHn04q9BQw5xazdmysbHxs&callback=initMap&loading=async&libraries=marker,geometry">
+        </script> <!-- Carga la API de Google Maps con las bibliotecas necesarias -->
 
     <!-- Enlaza el archivo JavaScript que contiene la lógica para inicializar y manipular el mapa -->
     <script src="../JavaScript/PaginaInvitado.js"></script>

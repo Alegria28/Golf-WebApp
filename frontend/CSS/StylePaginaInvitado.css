@@ -1,3 +1,4 @@
+/* Estilo para el contenedor del mapa */
 #mapa {
     height: 100%;
     /* Establece la altura del mapa al 100% de su contenedor padre */
@@ -5,6 +6,7 @@
     /* Establece el ancho del mapa al 100% de su contenedor padre */
 }
 
+/* Estilo global para el HTML y el body */
 html,
 body {
     height: 100%;
@@ -15,6 +17,7 @@ body {
     /* Elimina el relleno predeterminado del navegador */
 }
 
+/* Contenedor para los elementos sobre el mapa */
 #sobreMapa {
     position: absolute;
     /* Posiciona el elemento absolutamente en relación con su ancestro posicionado más cercano */
@@ -30,74 +33,86 @@ body {
     /* Permite que los eventos del ratón interactúen con los elementos debajo de él */
 }
 
-#centrarMapa {
+/* Contenedor para los botones en la esquina inferior derecha */
+#abajoDerecha {
+    display: flex;
+    /* Configura un diseño flexible */
+    flex-direction: column;
+    /* Organiza los elementos en una columna */
     position: absolute;
-    /* Posiciona el botón absolutamente en relación con su ancestro posicionado más cercano */
+    /* Posiciona el contenedor absolutamente */
     right: 20px;
-    /* Lo alinea a 20px del borde derecho de su contenedor */
+    /* Lo alinea a 20px del borde derecho */
     bottom: 20px;
-    /* Lo alinea a 20px del borde inferior de su contenedor */
+    /* Lo alinea a 20px del borde inferior */
     pointer-events: auto;
-    /* Permite que el botón responda a los eventos del ratón */
-    border-radius: 50%;
-    /* Hace que el botón tenga bordes redondeados, formando un círculo */
-
+    /* Permite que los botones respondan a los eventos del ratón */
 }
 
-#centrarMapa i.material-symbols-outlined {
+/* Estilo para los íconos de los botones */
+#abajoDerecha i.material-symbols-outlined {
     font-size: 50px;
     /* Establece el tamaño del icono */
     user-select: none;
     /* Evita que el usuario pueda seleccionar el texto del icono */
     -webkit-user-select: none;
-    /* Evita que el usuario pueda seleccionar el texto del icono en navegadores basados en WebKit */
+    /* Compatibilidad con navegadores basados en WebKit */
 }
 
+/* Estilo para los botones redondeados */
+#abajoDerecha button {
+    margin: 10px;
+    /* Espaciado entre los botones */
+    border-radius: 50%;
+    /* Hace que los botones sean circulares */
+}
+
+/* Estilo para el div que muestra la distancia */
 #distancia {
     background-color: white;
-    /* Establece el color de fondo del elemento a blanco */
+    /* Fondo blanco para el texto */
     position: absolute;
-    /* Posiciona el elemento absolutamente en relación con su ancestro posicionado más cercano */
+    /* Posiciona el elemento absolutamente */
     top: 10px;
-    /* Lo alinea a 10px de la parte superior de su contenedor */
+    /* Lo alinea a 10px de la parte superior */
     left: 50%;
-    /* Lo alinea al centro horizontal de su contenedor */
+    /* Lo centra horizontalmente */
     transform: translateX(-50%);
-    /* Ajusta la posición horizontal para centrarlo correctamente */
+    /* Ajusta la posición para centrarlo correctamente */
     text-align: center;
     /* Centra el texto dentro del elemento */
     user-select: none;
-    /* Evita que el usuario pueda seleccionar el texto */
+    /* Evita que el texto sea seleccionable */
     -webkit-user-select: none;
-    /* Evita que el usuario pueda seleccionar el texto en navegadores basados en WebKit */
+    /* Compatibilidad con navegadores basados en WebKit */
     pointer-events: auto;
     /* Permite que el elemento responda a los eventos del ratón */
 }
 
+/* Contenedor para la información del hoyo en la izquierda */
 #izquierda {
-    border: 3px groove gray ;
-
+    border: 3px groove gray;
+    /* Borde con estilo "groove" y color gris */
     margin: 5px;
-    /* Establece un margen de 5px alrededor del elemento */
+    /* Margen alrededor del contenedor */
     position: absolute;
-    /* Posiciona el elemento absolutamente en relación con su ancestro posicionado más cercano */
+    /* Posiciona el contenedor absolutamente */
     background-color: #FFFF;
-    /* Establece el color de fondo del elemento a blanco */
+    /* Fondo blanco */
     top: 50%;
-    /* Lo alinea al 50% de la altura de su contenedor */
+    /* Lo centra verticalmente */
     -ms-transform: translateY(-50%);
-    /* Ajusta la posición vertical para centrarlo correctamente en navegadores antiguos de Microsoft */
+    /* Compatibilidad con navegadores antiguos de Microsoft */
     transform: translateY(-50%);
-    /* Ajusta la posición vertical para centrarlo correctamente */
-
+    /* Ajusta la posición para centrarlo correctamente */
     -webkit-user-select: none;
-    /* Evita que el usuario pueda seleccionar el texto en navegadores basados en WebKit */
+    /* Evita que el texto sea seleccionable en navegadores WebKit */
     pointer-events: auto;
-    /* Permite que el elemento responda a los eventos del ratón */
-
+    /* Permite que el contenedor responda a los eventos del ratón */
     text-align: center;
-    
+    /* Centra el texto dentro del contenedor */
     font-weight: bold;
-
+    /* Hace que el texto sea negrita */
     padding: 4px;
+    /* Espaciado interno dentro del contenedor */
 }

@@ -30,7 +30,5 @@ public class PruebaServidor {
             // capturamos la excepción e imprimimos un mensaje de error en la consola.
             System.out.println("Excepción: " + e.getMessage());
         }
-
     }
-
 }
