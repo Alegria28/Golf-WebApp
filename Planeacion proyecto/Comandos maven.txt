@@ -55,3 +55,5 @@ mvn package
 Para que los comandos mvn compile o mvn test "funcionen" en el sentido de verificar la disponibilidad de la dependencia de MySQL, 
 no necesitas usar comandos específicos que vengan directamente de la dependencia en sí. 
 Más bien, necesitas que tu código Java (tanto el código fuente principal como el código de prueba) intente utilizar clases que proporciona la dependencia de MySQL.
+
+Para ejecutar la aplicación springboot, se suele usar mvn spring-boot:run
