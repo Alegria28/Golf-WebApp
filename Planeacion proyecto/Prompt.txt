@@ -1,0 +1,6 @@
+Prompt para despues alojar mi backend en la raspberry
+
+Tengo una aplicación Spring Boot que ya funciona correctamente de manera local. Quiero desplegarla en mi Raspberry Pi para que actúe como mi backend y que tambien aloje mi BD remota, para que sea accesible desde internet.
+Por favor, explícame paso a paso cómo configurar mi Raspberry Pi, transferir mi aplicación Spring Boot, ejecutarla y hacerla accesible desde internet, al igual que mi base de datos. 
+También quiero saber cómo configurar el reenvío de puertos en mi router, cómo automatizar el inicio del backend en la Raspberry Pi al encenderla y cómo asegurarla para evitar problemas de seguridad. 
+Proporcióname comandos específicos y cualquier configuración adicional que deba realizar.
