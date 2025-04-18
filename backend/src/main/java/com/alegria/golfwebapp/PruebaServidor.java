@@ -1,34 +1,44 @@
 package com.alegria.golfwebapp;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+// Importaciones necesarias para el funcionamiento del código.
+import org.springframework.beans.factory.annotation.Value; // Permite inyectar valores desde application.properties.
+import org.springframework.stereotype.Component; // Marca esta clase como un componente de Spring.
 
-@SuppressWarnings("unused") // Temporal
+import java.sql.Connection; // Representa una conexión a la base de datos.
+import java.sql.DriverManager; // Proporciona métodos para gestionar conexiones JDBC.
+
+@Component // Marca esta clase como un componente de Spring para que sea detectada
+           // automáticamente.
 public class PruebaServidor {
-    public static void main(String[] args) {
-        // Definimos la URL de la base de datos MySQL a la que nos vamos a conectar.
-        // Esta URL incluye el protocolo JDBC, la dirección del servidor (localhost),
-        // el puerto (3306) y el nombre de la base de datos (golfappbd).
-        String url = "jdbc:mysql://localhost:3306/golfappbd";
-        // Definimos el usuario que se utilizará para la conexión a la base de datos.
-        String user = "root";
-        // Definimos la contraseña del usuario para la conexión a la base de datos.
-        String password = "soloQUERIAunproyecto2812";
 
+    // Inyección de valores desde application.properties.
+    // Estas variables almacenan la información necesaria para conectarse a la base
+    // de datos.
+
+    @Value("${spring.datasource.url}")
+    private String url; // URL de la base de datos (protocolo, host, puerto y nombre de la base de
+                        // datos).
+
+    @Value("${spring.datasource.username}")
+    private String user; // Nombre de usuario para la conexión a la base de datos.
+
+    @Value("${spring.datasource.password}")
+    private String password; // Contraseña del usuario para la conexión a la base de datos.
+
+    public void probarConexion() {
         try {
-            // Intentamos establecer una conexión con la base de datos.
-
-            // Primero, cargamos el driver de JDBC para MySQL.
+            // Carga el driver JDBC para MySQL.
             // Esto es necesario para que Java pueda interactuar con la base de datos MySQL.
             Class.forName("com.mysql.cj.jdbc.Driver");
-            // Establecemos la conexión utilizando la URL, el usuario y la contraseña definidos anteriormente.
-            // DriverManager.getConnection() intenta establecer una conexión con la base de datos.
+
+            // Establece la conexión con la base de datos utilizando los valores inyectados.
             Connection connection = DriverManager.getConnection(url, user, password);
-            // Si la conexión se establece con éxito, imprimimos un mensaje de confirmación en la consola.
+
+            // Si la conexión es exitosa, imprime un mensaje en la consola.
             System.out.println("Conexión exitosa con la base de datos: " + url);
         } catch (Exception e) {
-            // Si ocurre alguna excepción durante el proceso de conexión,
-            // capturamos la excepción e imprimimos un mensaje de error en la consola.
+            // Si ocurre un error durante la conexión, captura la excepción y muestra un
+            // mensaje de error.
             System.out.println("Excepción: " + e.getMessage());
         }
     }
