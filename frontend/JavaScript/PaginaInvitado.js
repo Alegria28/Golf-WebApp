@@ -7,6 +7,7 @@ let polylinea = null; // Polyline para dibujar la ruta de medición
 let ubicacionInicialEstablecida = false; // Variable para controlar si la ubicación inicial ya se ha establecido
 let modoDistancia = false; // Variable para controlar en qué modo de distancia está el usuario
 let puntoA = null; // Variable para almacenar el primer punto seleccionado en el modo de distancia entre A y B
+let hoyoActual = 1; // Inicializa el hoyo actual en 1
 
 // Función principal para inicializar el mapa de Google Maps
 function initMap() {
@@ -281,3 +282,57 @@ window.addEventListener('beforeunload', function () {
         navigator.geolocation.clearWatch(idRastreo); // Detiene el seguimiento de la ubicación para liberar recursos
     }
 });
+
+
+// Función para obtener los datos del hoyo desde el backend
+async function obtenerHoyo(hoyo) {
+    try {
+        // Realiza una solicitud HTTP GET al backend para obtener los datos del hoyo especificado.
+        // La URL incluye el número del hoyo como parte de la ruta.
+        const response = await fetch(`http://localhost:8080/api/campo/${hoyo}`);
+        
+        // Verifica si la respuesta del servidor es exitosa (código de estado 200-299).
+        if (!response.ok) {
+            // Si la respuesta no es exitosa, lanza un error con un mensaje personalizado.
+            throw new Error("Error al obtener los datos del hoyo");
+        }
+
+        // Convierte la respuesta del servidor (en formato JSON) a un objeto JavaScript.
+        const data = await response.json();
+
+        // Llama a la función para actualizar la información del hoyo en el HTML.
+        actualizarInformacionHoyo(data.hoyo, data.par);
+    } catch (error) {
+        // Si ocurre un error durante la solicitud o el procesamiento de la respuesta,
+        // se captura aquí y se muestra en la consola del navegador.
+        console.error(error);
+    }
+}
+
+// Función para actualizar el contenido del div con la información del hoyo
+function actualizarInformacionHoyo(hoyo, par) {
+    // Actualiza el contenido del elemento HTML con el ID "numeroHoyo" para mostrar el número del hoyo.
+    document.getElementById("numeroHoyo").innerHTML = `<p>Hoyo: ${hoyo}</p>`;
+    
+    // Actualiza el contenido del elemento HTML con el ID "parHoyo" para mostrar el par del hoyo.
+    document.getElementById("parHoyo").innerHTML = `<p>Par: ${par}</p>`;
+}
+
+// Evento para cambiar al siguiente hoyo al presionar el botón
+document.getElementById("cambiarHoyo").addEventListener("click", () => {
+    // Verifica si el hoyo actual es menor que 18 (el último hoyo).
+    if (hoyoActual < 18) {
+        // Incrementa el número del hoyo actual en 1.
+        hoyoActual++;
+        
+        // Llama a la función para obtener los datos del siguiente hoyo desde el backend.
+        obtenerHoyo(hoyoActual);
+    } else {
+        // Si ya se completaron los 18 hoyos, muestra un mensaje de alerta al usuario.
+        alert("Has completado todos los hoyos.");
+    }
+});
+
+// Cargar el primer hoyo al iniciar la página
+// Llama a la función para obtener los datos del primer hoyo (hoyo 1) cuando se carga la página.
+obtenerHoyo(hoyoActual);

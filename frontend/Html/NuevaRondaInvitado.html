@@ -29,13 +29,13 @@
         <!-- Contenedor para los botones en la esquina inferior derecha -->
         <div id="abajoDerecha">
             <!-- Botón para cambiar el modo de distancias -->
-            <button type="button" id="cambiarDistancia">
+            <button type="button" id="cambiarDistancia" class="boton">
                 <!-- Icono para el botón de cambiar distancia -->
                 <i class="material-symbols-outlined">person_pin_circle</i> <!-- Ícono de una persona para medir distancias-->
             </button>
 
             <!-- Botón para centrar el mapa en la ubicación del usuario -->
-            <button type="button" id="centrarMapa">
+            <button type="button" id="centrarMapa" class="boton">
                 <!-- Icono para el botón de centrar -->
                 <i class="material-symbols-outlined">distance</i> <!-- Ícono para centrar el mapa -->
             </button>
@@ -46,21 +46,29 @@
             <div class="informacionIzquierda">
                 <!-- Información del número del hoyo -->
                 <div id="numeroHoyo">
-                    <p>Hoyo</p> <!-- Texto que indica el número del hoyo -->
+
                 </div>
                 <!-- Información del par del hoyo -->
                 <div id="parHoyo">
-                    <p>Par</p> <!-- Texto que indica el par del hoyo -->
+                    
                 </div>
                 <!-- Información de la ventaja del hoyo -->
                 <div id="ventajaHoyo">
-                    <p>Ventaja</p> <!-- Texto que indica la ventaja del hoyo -->
+                    <p>Ventaja</p>
                 </div>
             </div>
         </div>
 
         <!-- Div donde se mostrará la distancia medida -->
         <div id="distancia">Distancia: 0yd</div> <!-- Texto que muestra la distancia medida en yardas -->
+
+        <div>
+            <!-- Botón para cambiar de hoyo -->
+            <button type="button" id="cambiarHoyo" class="boton">
+                <!-- Icono para el botón de cambiar distancia -->
+                <i class="material-symbols-outlined">checkbook</i> Ingresar puntaje <!-- Ícono de una hoja y un lápiz-->
+            </button>
+        </div>
     </div>
 
     <!-- Script de Google Maps API -->

@@ -28,6 +28,11 @@ body {
     /* Oculta los elementos */
 }
 
+.boton {
+    /* Cambia el cursor al pasar sobre el botón */
+    cursor: pointer;
+}
+
 /* Contenedor para los elementos sobre el mapa */
 #sobreMapa {
     position: absolute;
@@ -52,8 +57,8 @@ body {
     /* Organiza los elementos en una columna */
     position: absolute;
     /* Posiciona el contenedor absolutamente */
-    right: 20px;
-    /* Lo alinea a 20px del borde derecho */
+    right: 5px;
+    /* Lo alinea a 5px del borde derecho */
     bottom: 20px;
     /* Lo alinea a 20px del borde inferior */
     pointer-events: auto;
@@ -126,4 +131,36 @@ body {
     /* Hace que el texto sea negrita */
     padding: 4px;
     /* Espaciado interno dentro del contenedor */
+}
+
+#cambiarHoyo {
+    position: fixed;
+    /* Fija el elemento en una posición específica dentro de la ventana del navegador */
+    bottom: 10px;
+    /* Lo posiciona a 10px desde la parte inferior de la ventana */
+    left: 50%;
+    /* Lo centra horizontalmente en la ventana */
+    transform: translateX(-50%);
+    /* Ajusta la posición para que quede perfectamente centrado horizontalmente */
+    width: 180px;
+    /* Establece un ancho fijo de 180px */
+    height: 50px;
+    /* Establece una altura fija de 50px */
+    text-align: center;
+    /* Centra el texto dentro del elemento */
+    user-select: none;
+    /* Evita que el texto dentro del elemento sea seleccionable */
+    -webkit-user-select: none;
+    /* Compatibilidad con navegadores basados en WebKit */
+    pointer-events: auto;
+    /* Permite que el elemento responda a los eventos del ratón */
+}
+
+#cambiarHoyo i.material-symbols-outlined {
+    font-size: 25px;
+    /* Establece el tamaño del ícono a 25px */
+    margin-right: 8px;
+    /* Agrega un espacio de 8px a la derecha del ícono */
+    vertical-align: middle;
+    /* Alinea verticalmente el ícono con el texto */
 }

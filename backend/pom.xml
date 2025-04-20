@@ -60,6 +60,35 @@
 		    <artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- 
+    		Spring Boot Starter Web proporciona las herramientas necesarias para construir aplicaciones web, 
+    		incluyendo soporte para controladores REST, manejo de solicitudes HTTP y servidores embebidos 
+    		como Tomcat o Jetty.
+		-->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-web</artifactId>
+	    </dependency>
+
+		<!-- 
+		    Jakarta Persistence API proporciona las anotaciones necesarias para mapear clases Java a tablas de bases de datos.
+    		Es esencial para trabajar con JPA (Java Persistence API) en aplicaciones Spring Boot.
+		-->
+		<dependency>
+		    <groupId>jakarta.persistence</groupId>
+		    <artifactId>jakarta.persistence-api</artifactId>
+		    <version>3.1.0</version>
+		</dependency>
+
+		<!-- 
+    		Spring Data JPA proporciona herramientas para trabajar con bases de datos relacionales 
+    		utilizando repositorios basados en JPA. Es esencial para manejar operaciones CRUD en Spring Boot.
+		-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

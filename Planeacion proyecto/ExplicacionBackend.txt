@@ -1,0 +1,55 @@
+### Explicación de los componentes del backend
+
+#### 1. CorsConfig
+**¿Qué es?**
+CorsConfig es una clase de configuración en Spring Boot que define las reglas de CORS (Cross-Origin Resource Sharing). CORS es un mecanismo de seguridad que controla cómo los recursos de un servidor pueden ser solicitados desde un dominio diferente al del servidor.
+
+**¿Por qué es necesario?**
+Cuando el frontend y el backend están en dominios diferentes (por ejemplo, `http://localhost:3000` para el frontend y `http://localhost:8080` para el backend), el navegador bloquea las solicitudes por razones de seguridad. Esto se conoce como la política de mismo origen (Same-Origin Policy). Para permitir que el frontend interactúe con el backend, es necesario configurar CORS en el servidor.
+
+**¿Cómo funciona?**
+La clase `CorsConfig` utiliza la interfaz `WebMvcConfigurer` para definir reglas específicas:
+- **addMapping("/api/**")**: Aplica las reglas de CORS solo a las rutas que comienzan con `/api/`.
+- **allowedOrigins**: Especifica los dominios desde los cuales se permiten solicitudes. En este caso, se permiten solicitudes desde `http://127.0.0.1:5500` y `http://localhost:3000`.
+- **allowedMethods**: Define los métodos HTTP permitidos, como `GET`, `POST`, `PUT`, `DELETE` y `OPTIONS`.
+- **allowedHeaders**: Permite todos los encabezados en las solicitudes.
+- **allowCredentials**: Permite el uso de credenciales, como cookies o tokens de autenticación.
+
+**Ejemplo de uso:**
+En este proyecto, `CorsConfig` asegura que el frontend pueda comunicarse con el backend sin problemas de CORS, permitiendo que las solicitudes HTTP fluyan correctamente.
+
+---
+
+#### 2. Controller
+**¿Qué es?**
+Un controller en Spring Boot es una clase que maneja las solicitudes HTTP (GET, POST, PUT, DELETE) que llegan al servidor y devuelve respuestas al cliente.
+
+**¿Para qué sirve?**
+Define las rutas y la lógica para procesar las solicitudes. Por ejemplo, el `CampoController` maneja solicitudes relacionadas con los datos de los hoyos del campo de golf.
+
+**Ejemplo de uso:**
+En este proyecto, el `CampoController` tiene un método `getHoyo` que devuelve información sobre un hoyo específico de la base de datos.
+
+---
+
+#### 3. Model (Campo)
+**¿Qué es?**
+Un model en Spring Boot es una clase que representa una entidad de la base de datos. Cada instancia de esta clase corresponde a un registro en una tabla.
+
+**¿Para qué sirve?**
+Sirve como puente entre la base de datos y el código Java. Permite mapear los datos de la tabla a objetos Java y viceversa.
+
+**Ejemplo de uso:**
+En este proyecto, la clase `Campo` representa la tabla `campo` en la base de datos, con atributos como `hoyo` y `par`.
+
+---
+
+#### 4. Repository
+**¿Qué es?**
+Un repository en Spring Boot es una interfaz que proporciona métodos para interactuar con la base de datos, como guardar, buscar, actualizar y eliminar registros.
+
+**¿Para qué sirve?**
+Simplifica las operaciones con la base de datos al proporcionar métodos predefinidos. También permite definir consultas personalizadas si es necesario.
+
+**Ejemplo de uso:**
+En este proyecto, el `CampoRepository` extiende `JpaRepository` y permite buscar información sobre los hoyos del campo de golf usando métodos como `findById`.
