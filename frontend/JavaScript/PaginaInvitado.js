@@ -8,6 +8,8 @@ let ubicacionInicialEstablecida = false; // Variable para controlar si la ubicac
 let modoDistancia = false; // Variable para controlar en qué modo de distancia está el usuario
 let puntoA = null; // Variable para almacenar el primer punto seleccionado en el modo de distancia entre A y B
 let hoyoActual = 1; // Inicializa el hoyo actual en 1
+let greenlat = 0 // Variable para almacenar la latitud del green actual
+let greenlong = 0 // Variable para almacenar la latitud del green actual
 
 // Función principal para inicializar el mapa de Google Maps
 function initMap() {
@@ -197,6 +199,48 @@ function initMap() {
             circuloUsuario.setRadius(calcularRadioCirculo()); // Actualiza el radio del círculo según el nivel de zoom
         }
     });
+
+    // Añade un listener para el botón de distanciaGreen
+    const botonDistanciaGreen = document.getElementById('distanciaGreen');
+
+    botonDistanciaGreen.addEventListener('click', () => {
+        // Función para agregar una coordenada a la ruta de medición
+        if (!ubicacionUsuario) {
+            // Si la ubicación del usuario no está disponible
+            console.error("User location not available."); // Muestra un mensaje de error en la consola
+            return; // Sale de la función
+        }
+
+        const ubicacionUsuarioLatLng = new google.maps.LatLng(ubicacionUsuario.lat, ubicacionUsuario.lng); // Crea un objeto LatLng con la ubicación del usuario
+
+        // Si ya existe una polyline, la elimina del mapa
+        if (polylinea) {
+            // Si la polyline existe
+            polylinea.setMap(null); // Elimina la polyline del mapa
+        }
+
+        // Crea una nueva polyline para la medición
+        polylinea = new google.maps.Polyline({
+            path: [ubicacionUsuarioLatLng, new google.maps.LatLng(greenlat, greenlong)], // Asigna el array de coordenadas a la polyline
+            geodesic: true, // Indica que la ruta debe seguir la curvatura de la Tierra
+            strokeColor: '#FFFF', // Color de la línea (rojo)
+            strokeOpacity: 1.0, // Opacidad de la línea
+            strokeWeight: 3, // Grosor de la línea
+            map: mapa, // Asigna el mapa a la polyline
+        });
+
+        // Agrega un listener para eliminar la polyline al hacer clic sobre ella
+        polylinea.addListener('click', () => {
+            // Agrega un event listener a la polyline para detectar clics
+            polylinea.setMap(null); // Elimina la polyline del mapa
+            distanciaDiv.textContent = `Distancia: ${0} yd`; // Muestra la distancia en el elemento HTML
+        });
+
+        // Calcula la distancia entre la ubicación del usuario y el punto de clic
+        calcularDistancia(ubicacionUsuarioLatLng, new google.maps.LatLng(greenlat, greenlong)); // Llama a la función para calcular la distancia
+
+    });
+
 }
 
 // Función para agregar una coordenada a la ruta de medición
@@ -290,7 +334,7 @@ async function obtenerHoyo(hoyo) {
         // Realiza una solicitud HTTP GET al backend para obtener los datos del hoyo especificado.
         // La URL incluye el número del hoyo como parte de la ruta.
         const response = await fetch(`http://localhost:8080/api/campo/${hoyo}`);
-        
+
         // Verifica si la respuesta del servidor es exitosa (código de estado 200-299).
         if (!response.ok) {
             // Si la respuesta no es exitosa, lanza un error con un mensaje personalizado.
@@ -300,6 +344,10 @@ async function obtenerHoyo(hoyo) {
         // Convierte la respuesta del servidor (en formato JSON) a un objeto JavaScript.
         const data = await response.json();
 
+        // Guardamos la información sobre el green de este hoyo
+        greenlat = data.greenLatitud;
+        greenlong = data.greenLongitud;
+        
         // Llama a la función para actualizar la información del hoyo en el HTML.
         actualizarInformacionHoyo(data.hoyo, data.par);
     } catch (error) {
@@ -313,7 +361,7 @@ async function obtenerHoyo(hoyo) {
 function actualizarInformacionHoyo(hoyo, par) {
     // Actualiza el contenido del elemento HTML con el ID "numeroHoyo" para mostrar el número del hoyo.
     document.getElementById("numeroHoyo").innerHTML = `<p>Hoyo: ${hoyo}</p>`;
-    
+
     // Actualiza el contenido del elemento HTML con el ID "parHoyo" para mostrar el par del hoyo.
     document.getElementById("parHoyo").innerHTML = `<p>Par: ${par}</p>`;
 }
@@ -324,7 +372,7 @@ document.getElementById("cambiarHoyo").addEventListener("click", () => {
     if (hoyoActual < 18) {
         // Incrementa el número del hoyo actual en 1.
         hoyoActual++;
-        
+
         // Llama a la función para obtener los datos del siguiente hoyo desde el backend.
         obtenerHoyo(hoyoActual);
     } else {
