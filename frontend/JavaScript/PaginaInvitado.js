@@ -27,7 +27,6 @@ function initMap() {
         streetViewControl: false, // Oculta el control de Street View
         mapTypeControl: false, // Oculta el control de tipo de mapa
         fullscreenControl: false, // Oculta el control de pantalla completa
-        gestureHandling: 'cooperative' // El mapa se mueve y se rota según los gestos del usuario, y se permite el zoom
     });
 
     // Intenta obtener y observar la ubicación del usuario en tiempo real
