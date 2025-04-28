@@ -133,7 +133,7 @@ body {
     /* Espaciado interno dentro del contenedor */
 }
 
-#cambiarHoyo {
+#ingresarPuntaje {
     position: fixed;
     /* Fija el elemento en una posición específica dentro de la ventana del navegador */
     bottom: 10px;
@@ -156,11 +156,98 @@ body {
     /* Permite que el elemento responda a los eventos del ratón */
 }
 
-#cambiarHoyo i.material-symbols-outlined {
+#ingresarPuntaje i.material-symbols-outlined {
     font-size: 25px;
     /* Establece el tamaño del ícono a 25px */
     margin-right: 8px;
     /* Agrega un espacio de 8px a la derecha del ícono */
     vertical-align: middle;
     /* Alinea verticalmente el ícono con el texto */
+}
+
+/* Estilo para los popups */
+.popup {
+    position: fixed;
+    /* Fija el popup en una posición específica dentro de la ventana del navegador */
+    top: 50%;
+    /* Lo alinea a la mitad de la altura de la ventana */
+    left: 50%;
+    /* Lo alinea a la mitad del ancho de la ventana */
+    transform: translate(-50%, -50%);
+    /* Ajusta la posición para que quede perfectamente centrado */
+    background-color: white;
+    /* Fondo blanco */
+    border: 2px solid gray;
+    /* Borde gris */
+    border-radius: 10px;
+    /* Borde redondeado */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Agrega un sombreado debajo del popup */
+    z-index: 1000;
+    /* Asegura que el popup esté por encima de los demás elementos */
+    padding: 20px;
+    /* Espaciado interno dentro del popup */
+    width: 300px;
+    /* Establece un ancho fijo de 300px */
+    text-align: center;
+    /* Centra el texto dentro del popup */
+}
+
+/* Oculta el popup */
+.popup.oculto {
+    display: none;
+}
+
+/* Estilo para el título del popup */
+.popup-contenido h2 {
+    margin: 0 0 10px;
+    /* Agrega un margen inferior de 10px */
+}
+
+/* Estilo para el label de los inputs */
+.popup-contenido label {
+    display: block;
+    /* Establece el label como un bloque */
+    margin-bottom: 5px;
+    /* Agrega un margen inferior de 5px */
+}
+
+/* Estilo para los inputs */
+.popup-contenido input {
+    width: 100%;
+    /* Ocupa todo el ancho del contenedor */
+    padding: 5px;
+    /* Agrega un espaciado interno de 5px */
+    margin-bottom: 15px;
+    /* Agrega un margen inferior de 15px */
+    border: 1px solid #ccc;
+    /* Borde gris claro */
+    border-radius: 5px;
+    /* Borde redondeado */
+}
+
+/* Estilo para los botones del popup */
+.popup-botones {
+    display: flex;
+    /* Configura un diseño flexible */
+    justify-content: space-between;
+    /* Distribuye los botones de manera uniforme */
+}
+
+/* Estilo para los botones individuales */
+.popup-botones button {
+    padding: 5px 10px;
+    /* Agrega un espaciado interno de 5px en vertical y 10px en horizontal */
+    border: none;
+    /* No agrega un borde */
+    border-radius: 5px;
+    /* Borde redondeado */
+    cursor: pointer;
+    /* Cambia el cursor a una mano al pasar por encima del botón */
+}
+
+/* Estilo para los botones al pasar por encima con el cursor */
+.popup-botones button:hover {
+    background-color: #f0f0f0;
+    /* Cambia el fondo a un gris claro */
 }

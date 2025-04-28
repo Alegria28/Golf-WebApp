@@ -70,11 +70,24 @@
         <div id="distancia">Distancia: 0yd</div> <!-- Texto que muestra la distancia medida en yardas -->
 
         <div>
-            <!-- Botón para cambiar de hoyo -->
-            <button type="button" id="cambiarHoyo" class="boton">
-                <!-- Icono para el botón de cambiar distancia -->
-                <i class="material-symbols-outlined">checkbook</i> Ingresar puntaje <!-- Ícono de una hoja y un lápiz-->
+            <!-- Botón para almacenar el puntaje -->
+            <button type="button" id="ingresarPuntaje" class="boton">
+                <!-- Icono para el botón -->
+                <i class="material-symbols-outlined">checkbook</i> Ingresar puntaje
             </button>
+        </div>
+    </div>
+
+    <!-- Popup para ingresar el puntaje -->
+    <div id="popupPuntaje" class="popup oculto">
+        <div class="popup-contenido">
+            <h2>Ingresar Puntaje</h2>
+            <label for="puntaje">Puntaje:</label>
+            <input type="number" id="puntaje" min="1">
+            <div class="popup-botones">
+                <button type="button" id="guardarPuntaje">Guardar</button>
+                <button type="button" id="cerrarPopup">Cancelar</button>
+            </div>
         </div>
     </div>
 

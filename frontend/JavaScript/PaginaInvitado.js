@@ -8,8 +8,9 @@ let ubicacionInicialEstablecida = false; // Variable para controlar si la ubicac
 let modoDistancia = false; // Variable para controlar en qué modo de distancia está el usuario
 let puntoA = null; // Variable para almacenar el primer punto seleccionado en el modo de distancia entre A y B
 let hoyoActual = 1; // Inicializa el hoyo actual en 1
-let greenlat = 0 // Variable para almacenar la latitud del green actual
-let greenlong = 0 // Variable para almacenar la latitud del green actual
+let greenlat = 0; // Variable para almacenar la latitud del green actual
+let greenlong = 0; // Variable para almacenar la latitud del green actual
+let puntaje = 0;  // Variable para almacenar el puntaje ingresado por el usuario
 
 // Función principal para inicializar el mapa de Google Maps
 function initMap() {
@@ -25,7 +26,8 @@ function initMap() {
         panControl: true,     // Muestra el control de pan (movimiento) en el mapa
         streetViewControl: false, // Oculta el control de Street View
         mapTypeControl: false, // Oculta el control de tipo de mapa
-        fullscreenControl: false // Oculta el control de pantalla completa
+        fullscreenControl: false, // Oculta el control de pantalla completa
+        gestureHandling: 'cooperative' // El mapa se mueve y se rota según los gestos del usuario, y se permite el zoom
     });
 
     // Intenta obtener y observar la ubicación del usuario en tiempo real
@@ -327,13 +329,14 @@ window.addEventListener('beforeunload', function () {
     }
 });
 
-
 // Función para obtener los datos del hoyo desde el backend
 async function obtenerHoyo(hoyo) {
     try {
         // Realiza una solicitud HTTP GET al backend para obtener los datos del hoyo especificado.
         // La URL incluye el número del hoyo como parte de la ruta.
-        const response = await fetch(`http://localhost:8080/api/campo/${hoyo}`);
+        const response = await fetch(`http://localhost:8080/api/campo/${hoyo}`, {
+            method: 'GET', // Especifica que la solicitud es de tipo GET
+        });
 
         // Verifica si la respuesta del servidor es exitosa (código de estado 200-299).
         if (!response.ok) {
@@ -347,13 +350,34 @@ async function obtenerHoyo(hoyo) {
         // Guardamos la información sobre el green de este hoyo
         greenlat = data.greenLatitud;
         greenlong = data.greenLongitud;
-        
+
         // Llama a la función para actualizar la información del hoyo en el HTML.
         actualizarInformacionHoyo(data.hoyo, data.par);
     } catch (error) {
         // Si ocurre un error durante la solicitud o el procesamiento de la respuesta,
         // se captura aquí y se muestra en la consola del navegador.
         console.error(error);
+    }
+}
+
+// Función para almacenar el puntaje de un hoyo en el caché del backend
+async function cargarPuntaje(hoyo, puntaje) {
+    try {
+        // Realiza una solicitud HTTP POST al backend para almacenar el puntaje del hoyo especificado.
+        // La URL incluye el número del hoyo y el puntaje como parte de la ruta.
+        const response = await fetch(`http://localhost:8080/api/cache/${hoyo}/${puntaje}`, {
+            method: 'POST', // Especifica que la solicitud es de tipo POST
+        });
+
+        // Verifica si la respuesta del servidor es exitosa (código de estado 200-299).
+        if (!response.ok) {
+            // Si la respuesta no es exitosa, lanza un error con un mensaje personalizado.
+            throw new Error("Error al cargar el puntaje en el caché");
+        }
+    } catch (error) {
+        // Si ocurre un error durante la solicitud o el procesamiento de la respuesta,
+        // se captura aquí y se muestra en la consola del navegador.
+        console.error("Error al intentar almacenar el puntaje:", error);
     }
 }
 
@@ -367,7 +391,7 @@ function actualizarInformacionHoyo(hoyo, par) {
 }
 
 // Evento para cambiar al siguiente hoyo al presionar el botón
-document.getElementById("cambiarHoyo").addEventListener("click", () => {
+document.getElementById("ingresarPuntaje").addEventListener("click", () => {
     // Verifica si el hoyo actual es menor que 18 (el último hoyo).
     if (hoyoActual < 18) {
         // Incrementa el número del hoyo actual en 1.
@@ -378,6 +402,36 @@ document.getElementById("cambiarHoyo").addEventListener("click", () => {
     } else {
         // Si ya se completaron los 18 hoyos, muestra un mensaje de alerta al usuario.
         alert("Has completado todos los hoyos.");
+    }
+});
+
+// Lógica para manejar el popup de ingresar puntaje
+document.getElementById('ingresarPuntaje').addEventListener('click', () => {
+    // Muestra el popup para ingresar el puntaje quitando la clase "oculto".
+    document.getElementById('popupPuntaje').classList.remove('oculto');
+});
+
+document.getElementById('cerrarPopup').addEventListener('click', () => {
+    // Oculta el popup para ingresar el puntaje agregando la clase "oculto".
+    document.getElementById('popupPuntaje').classList.add('oculto');
+});
+
+document.getElementById('guardarPuntaje').addEventListener('click', () => {
+    // Obtiene el valor ingresado en el campo de puntaje.
+    puntaje = document.getElementById('puntaje').value;
+
+    if (puntaje) {
+        // Si el puntaje es válido (no está vacío), muestra un mensaje de confirmación.
+        alert(`Puntaje guardado: ${puntaje}`);
+
+        // Llama a la función cargarPuntaje para enviar el puntaje al backend.
+        cargarPuntaje(hoyoActual - 1, puntaje);
+
+        // Oculta el popup después de guardar el puntaje.
+        document.getElementById('popupPuntaje').classList.add('oculto');
+    } else {
+        // Si el puntaje no es válido, muestra un mensaje de alerta al usuario.
+        alert('Por favor, ingrese un puntaje válido.');
     }
 });
 

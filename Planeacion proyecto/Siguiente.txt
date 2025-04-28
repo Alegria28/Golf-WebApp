@@ -1,0 +1,4 @@
+- Validacion puntaje 
+- Mejorar popup
+- Crear un GET para mostrar todos los puntajes guardados por el momento
+- Crear otro cache para no perder la informacion sobre el hoyo actual en el que estamos

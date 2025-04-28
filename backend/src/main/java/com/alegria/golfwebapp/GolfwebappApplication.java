@@ -2,11 +2,15 @@ package com.alegria.golfwebapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cache.annotation.EnableCaching;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Marca esta clase como el punto de entrada principal de la aplicación Spring Boot.
 @SpringBootApplication
+// Habilita la infraestructura de Spring para la gestión de cachés en la aplicación
+@EnableCaching
 public class GolfwebappApplication implements CommandLineRunner {
 
     // Inyección de dependencia: Spring se encarga de inicializar y proporcionar una instancia de PruebaServidor.
