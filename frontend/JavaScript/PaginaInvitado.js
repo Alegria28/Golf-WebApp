@@ -26,7 +26,7 @@ function initMap() {
         panControl: true,     // Muestra el control de pan (movimiento) en el mapa
         streetViewControl: false, // Oculta el control de Street View
         mapTypeControl: false, // Oculta el control de tipo de mapa
-        fullscreenControl: false, // Oculta el control de pantalla completa
+        fullscreenControl: false // Oculta el control de pantalla completa
     });
 
     // Intenta obtener y observar la ubicación del usuario en tiempo real
