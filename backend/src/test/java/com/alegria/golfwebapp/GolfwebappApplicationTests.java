@@ -9,5 +9,4 @@ class GolfwebappApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

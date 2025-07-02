@@ -25,11 +25,14 @@ public class PruebaServidor {
     @Value("${spring.datasource.password}")
     private String password; // Contraseña del usuario para la conexión a la base de datos.
 
+    @Value("${spring.datasource.driver-class-name}")
+    private String driverClassName; // Nombre completo de la clase del driver JDBC para MySQL.
+
     public void probarConexion() {
         try {
             // Carga el driver JDBC para MySQL.
             // Esto es necesario para que Java pueda interactuar con la base de datos MySQL.
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(driverClassName);
 
             // Establece la conexión con la base de datos utilizando los valores inyectados.
             Connection connection = DriverManager.getConnection(url, user, password);

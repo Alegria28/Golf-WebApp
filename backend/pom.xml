@@ -1,125 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.alegria</groupId>
-	<artifactId>golfwebapp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>golfwebapp</name>
-	<description>Demo project for Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
-	<properties>
-		<java.version>21</java.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.4</version>
+        <relativePath/>
+    </parent>
 
-		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
-		<!-- Direct vulnerabilities: 
-				CVE-2023-22102-->
-		<dependency>
-		    <groupId>com.mysql</groupId>
-		    <artifactId>mysql-connector-j</artifactId>
-		    <version>9.2.0</version>
-		</dependency>
+    <groupId>com.alegria</groupId>
+    <artifactId>golfwebapp</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>golfwebapp</name>
+    <description>Demo project for Spring Boot</description>
+    <url/>
 
-		<!-- 
+    <licenses>
+        <license/>
+    </licenses>
+
+    <developers>
+        <developer/>
+    </developers>
+
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+
+    <properties>
+        <java.version>21</java.version>
+    </properties>
+
+    <!--
+        Esta es una sección que nos permite manejar las versiones y configuración de dependencias a traves de distintos proyectos.
+        En este caso se utilizo para quitar el WARNING:
+        "Ignored POM import for: org.apache.maven.plugin-tools:maven-plugin-annotations:jar:3.7.0@compile as already imported org.apache.maven.plugin-tools:maven-plugin-annotations:jar:3.13.1@compile."
+        Esto significa que maven detecto 2 versiones (y esta utilizando la mas nueva), por lo que de esta manera definimos una version en especifica (solo definimos la version, pero no incluimos la dependencia)
+    -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-annotations</artifactId>
+                <version>3.15.1</version> <!-- Version mas nueva https://mvnrepository.com/artifact/org.apache.maven.plugin-tools/maven-plugin-annotations? -->
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <!-- Direct vulnerabilities: CVE-2023-22102 -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+
+        <!-- 
 		    Spring Boot Actuator proporciona endpoints para monitorear y gestionar la aplicación.
 		    Esta dependencia nos permite, por ejemplo, verificar si la base de datos está conectada
 		    correctamente mediante el endpoint /actuator/health.
 		-->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
-		<!-- 
+    	<!-- 
     		Spring Boot Starter Web proporciona las herramientas necesarias para construir aplicaciones web, 
     		incluyendo soporte para controladores REST, manejo de solicitudes HTTP y servidores embebidos 
     		como Tomcat o Jetty.
 		-->
-	    <dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-web</artifactId>
-	    </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-		<!-- 
-		    Jakarta Persistence API proporciona las anotaciones necesarias para mapear clases Java a tablas de bases de datos.
-    		Es esencial para trabajar con JPA (Java Persistence API) en aplicaciones Spring Boot.
-		-->
-		<dependency>
-		    <groupId>jakarta.persistence</groupId>
-		    <artifactId>jakarta.persistence-api</artifactId>
-		    <version>3.1.0</version>
-		</dependency>
-
-		<!-- 
+    	<!-- 
     		Spring Data JPA proporciona herramientas para trabajar con bases de datos relacionales 
     		utilizando repositorios basados en JPA. Es esencial para manejar operaciones CRUD en Spring Boot.
 		-->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
-
-		<!-- 
+    	<!-- 
 		    Spring Boot Starter Cache proporciona soporte para la caché en memoria,
 		    lo que nos permite guardar temporalmente resultados de operaciones costosas
 		    en memoria para evitar tener que realizarlas varias veces.
 		-->
-		<dependency>
-		      <groupId>org.springframework.boot</groupId>
-		      <artifactId>spring-boot-starter-cache</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
 
-		<!--
+    	<!--
 			Caffeine es un proveedor de caché en memoria de alto rendimiento y sencillo de usar, 
 			que se utiliza para almacenar temporalmente los resultados en memoria. 
 		-->
-		<dependency>
-			<groupId>com.github.ben-manes.caffeine</groupId>
-			<artifactId>caffeine</artifactId>
-			<version>3.0.5</version>
-		</dependency>		
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+    </dependencies>
 
-	</dependencies>
-
-	<build>
-		<plugins>
-			<!--It allows you to package executable jar or war archives, run Spring Boot applications, generate build information and start your Spring Boot application prior to running integration tests.-->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
+    <build>
+        <plugins>
+            <!-- Permite empaquetar archivos jar o war ejecutables, ejecutar aplicaciones Spring Boot, generar información de compilación y más -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
